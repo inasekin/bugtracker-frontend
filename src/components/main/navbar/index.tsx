@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { MobileSidebar } from '../mobile-sidebar';
-import { UserButton } from '../user-button';
+import { UserButton } from '../../user-button';
 
 interface PageInfo {
     title: string;

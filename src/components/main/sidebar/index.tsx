@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {DottedSeparator} from "@/components/dotted-separator";
-import {Navigation} from "@/components/navigation";
+import {Navigation} from "@/components/main/navigation";
 
 export const Sidebar = () => {
 

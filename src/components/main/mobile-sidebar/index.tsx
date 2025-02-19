@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { MenuIcon } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Sidebar } from "@/components/sidebar";
+import { Button } from "@/components/ui/button.tsx";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.tsx";
+import { Sidebar } from "@/components/main/sidebar";
 
 export const MobileSidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { pathname } = useLocation();
-    
+
     useEffect(() => {
         setIsOpen(false);
     }, [pathname]);

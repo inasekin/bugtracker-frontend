@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import {Spinner} from "@/components/spinner";
+import {Spinner} from "@/components/main/spinner";
 import {AppRoute, AuthStatus} from "@/types";
 import {useAuthContext} from "@/context/app";
 import {AuthorizationStatus} from "@/const.ts";

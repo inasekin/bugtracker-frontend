@@ -1,5 +1,5 @@
-import {Sidebar} from "@/components/sidebar";
-import {Navbar} from "@/components/navbar";
+import {Sidebar} from "@/components/main/sidebar";
+import {Navbar} from "@/components/main/navbar";
 import {Outlet} from "react-router-dom";
 
 export const Layout = () => {

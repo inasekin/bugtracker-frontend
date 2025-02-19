@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill, GoProject, GoGear } from "react-icons/go";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.ts";
 import { IconType } from "react-icons";
 
 interface RouteItem {
