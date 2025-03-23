@@ -45,7 +45,9 @@ export const App = () => {
 				>
 					<Route index element={<MainPage />} />
 					<Route path={AppRoute.Tasks} element={<TasksPage />} />
-					<Route path={AppRoute.Projects} element={<ProjectsPage />} />
+					<Route path={AppRoute.Projects} element={<ProjectsPage />} >
+						<Route path=':id' element={<ProjectsPage />} />
+					</Route>
 					<Route path={AppRoute.Settings} element={<SettingsPage />} />
 				</Route>
 				<Route path="*" element={<NotFoundPage />} />

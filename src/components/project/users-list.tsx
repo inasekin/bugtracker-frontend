@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { useFetch } from "@/components/project/data/use-fetch"
 import {
   Card,
   CardContent,
@@ -10,6 +11,7 @@ import {
 import { UserRolesRecord, columns } from "@/components/project/project-tables/user-columns.tsx"
 import { DataTable } from "@/components/project/project-tables/data-table"
 
+/*
 function getData(): UserRolesRecord[] {
   return [
     {
@@ -49,12 +51,37 @@ function getData(): UserRolesRecord[] {
       command: "Редактировать",
     }
   ];
+}*/
+
+export type UserRecord = {
+  id: string
+  name: string
+  email: string
+}
+
+function userRolesFromJson(json: any): UserRolesRecord[] {
+
+  if(json == null)
+    return {} as UserRolesRecord[];
+   
+  let userRoles = (json as Array<UserRecord>).map(val => { 
+    return {
+      id: val.id,
+      user: val.name,
+      roles: val.email,
+      command: "Редактировать"
+    }
+  }) as UserRolesRecord[];
+
+  return userRoles;
 }
 
 export function UsersList() {
 
-
-  const data = getData();
+  //const data = useFetch('/api/project');
+  const data = useFetch('/api/user');
+ 
+  //const data = getData();
 
   return (
     <Card>
@@ -65,11 +92,12 @@ export function UsersList() {
       <CardContent>
 
     	<div className="container mx-auto ">
-      		<DataTable columns={columns} data={data} />
+      		<DataTable columns={columns} data={userRolesFromJson(data)} />
 	    </div>
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button id="addUser">Добавить участника...</Button>
+        <Button id="back" onClick={ ()=> history.back() }>Назад</Button>
       </CardFooter>
     </Card>
   )
