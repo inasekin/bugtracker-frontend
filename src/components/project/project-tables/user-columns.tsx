@@ -28,7 +28,7 @@ export const columns: ColumnDef<UserRolesRecord>[] = [
     cell: ({ row }) => {
       const userRoles = row.original;
       const command = userRoles.command;
-      return (<div className="flex justify-end">
+      return (<div className="flex justify-end gap-2">
 	      <Button variant="secondary">{command}</Button>
         <Button variant="destructive">Удалить</Button>
       </div>);

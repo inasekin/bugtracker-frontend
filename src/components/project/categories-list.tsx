@@ -69,6 +69,7 @@ export function CategoriesList() {
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button id="addUser">Добавить категорию...</Button>
+        <Button id="back" onClick={ ()=> history.back() }>Назад</Button>
       </CardFooter>
     </Card>
   )

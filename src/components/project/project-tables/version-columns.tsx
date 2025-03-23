@@ -26,7 +26,7 @@ export const columns: ColumnDef<VersionRecord>[] = [
     header: "",
     cell: ({ row }) => {
       const command = row.original.command;
-      return (<div className="flex justify-end">
+      return (<div className="flex justify-end gap-2">
 	      <Button variant="secondary">{command}</Button>
 	      <Button variant="destructive">Удалить</Button>
       </div>);
