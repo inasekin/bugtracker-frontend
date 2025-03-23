@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { useFetch } from "@/components/project/data/use-fetch"
+import { useContext, useState } from "react"
 import {
   Card,
   CardContent,
@@ -8,8 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { UserRoleDictionary } from "./data/project-dto"
 import { UserRolesRecord, columns } from "@/components/project/project-tables/user-columns.tsx"
 import { DataTable } from "@/components/project/project-tables/data-table"
+import {ProjectContext} from "./data/project-context"
+import { ProjectAddUserDialog, UserRole } from "./project-add-user-card"
 
 /*
 function getData(): UserRolesRecord[] {
@@ -59,46 +62,72 @@ export type UserRecord = {
   email: string
 }
 
-function userRolesFromJson(json: any): UserRolesRecord[] {
-
-  if(json == null)
+function userRolesFromProject(userRolesDto: UserRoleDictionary): UserRolesRecord[] {
+  if(userRolesDto == null)
     return {} as UserRolesRecord[];
    
-  let userRoles = (json as Array<UserRecord>).map(val => { 
-    return {
-      id: val.id,
-      user: val.name,
-      roles: val.email,
-      command: "Редактировать"
-    }
-  }) as UserRolesRecord[];
-
+  const userRoles = new Array<UserRolesRecord>();
+  for (let key in userRolesDto) {
+    userRoles.push({
+      id: key,
+      user: key,
+      roles: userRolesDto[key],
+      command: "Редактировать"      
+    } as UserRolesRecord);
+  }
   return userRoles;
 }
+
 
 export function UsersList() {
 
   //const data = useFetch('/api/project');
-  const data = useFetch('/api/user');
- 
+  // const data = useFetch('/api/user');
   //const data = getData();
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Участники проекта</CardTitle>
-        <CardDescription className="my-2">Для проекта необходимо указать участников и задать роли. <br />Исходя из указанных ролей будут назначены заранее определенные права доступа.</CardDescription>
-      </CardHeader>
-      <CardContent>
+  const { project, setProject } = useContext(ProjectContext);
+  const [ userRole, setUserRole ] = useState({} as UserRole);
+  const [ userRoleDlgShowed, setUserRoleDlgShowed ] = useState(false);
 
-    	<div className="container mx-auto ">
-      		<DataTable columns={columns} data={userRolesFromJson(data)} />
-	    </div>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button id="addUser">Добавить участника...</Button>
-        <Button id="back" onClick={ ()=> history.back() }>Назад</Button>
-      </CardFooter>
-    </Card>
-  )
+  const addUser = () => {
+    let newProject = {...project};
+    newProject.userRoles = {...newProject.userRoles};
+    newProject.userRoles[userRole.userName] = userRole.userRoles;
+    setProject(newProject);
+    setUserRoleDlgShowed(false);
+  };
+
+  const showAddUserDlg = () => {
+    setUserRole({} as UserRole);
+    setUserRoleDlgShowed(true);
+  };
+
+  if(userRoleDlgShowed) {
+    return (
+      <div>
+        <ProjectAddUserDialog userRole={userRole} setUserRole={setUserRole}></ProjectAddUserDialog>
+        <br />
+        <Button onClick={()=> addUser()}>Добавить</Button> 
+        <Button onClick={()=> setUserRoleDlgShowed(false)}>Отмена</Button>
+      </div>
+    )
+  }
+  else {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Участники проекта</CardTitle>
+          <CardDescription className="my-2">Для проекта необходимо указать участников и задать роли. <br />Исходя из указанных ролей будут назначены заранее определенные права доступа.</CardDescription>
+        </CardHeader>
+        <CardContent>
+        <div className="container mx-auto ">
+            <DataTable columns={columns} data={ userRolesFromProject(project.userRoles)} />
+        </div>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button id="addUser" onClick={()=> showAddUserDlg()}>Добавить участника...</Button>
+        </CardFooter>
+      </Card>
+    )
+  }
 }

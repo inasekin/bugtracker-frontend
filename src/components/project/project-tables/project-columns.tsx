@@ -32,7 +32,7 @@ export const columns: ColumnDef<ProjectRecord>[] = [
       const itemId = row.original.id;
       return (<div className="flex justify-end gap-2">
 	      <Button variant="secondary"><Link to={itemId}>{command}</Link></Button>
-	      <Button variant="destructive"><Link to={itemId+"?delete"}>Удалить</Link></Button>
+	      <Button variant="destructive"><Link to={itemId+"?command=delete"}>Удалить</Link></Button>
       </div>);
     }
   },

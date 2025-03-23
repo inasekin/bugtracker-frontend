@@ -51,7 +51,7 @@ export function ProjectsList() {
   const navigate = useNavigate();
 
   const newProject = () => {
-    navigate('/projects/new')
+    navigate('/projects?command=new')
   };
 
   return (
