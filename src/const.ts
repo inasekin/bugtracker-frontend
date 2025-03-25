@@ -5,6 +5,7 @@ export const AppRoute = {
     NotFound: '/404' as const,
     Tasks: '/tasks' as const,
     Projects: '/projects' as const,
+    Users: '/users' as const,
     Settings: '/settings' as const,
 } as const;
 

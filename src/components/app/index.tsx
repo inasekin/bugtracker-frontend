@@ -10,6 +10,7 @@ import { RegisterPage } from '@/pages/register';
 import { AuthLayout } from '@/components/main/layout/auth-layout';
 import {TasksPage} from "@/pages/tasks";
 import {ProjectsPage} from "@/pages/projects";
+import {UsersPage} from "@/pages/users";
 import {SettingsPage} from "@/pages/settings";
 
 export const App = () => {
@@ -47,6 +48,9 @@ export const App = () => {
 					<Route path={AppRoute.Tasks} element={<TasksPage />} />
 					<Route path={AppRoute.Projects} element={<ProjectsPage />} >
 						<Route path=':id' element={<ProjectsPage />} />
+					</Route>
+					<Route path={AppRoute.Users} element={<UsersPage />}>
+						<Route path=":id" element={<UsersPage />} />
 					</Route>
 					<Route path={AppRoute.Settings} element={<SettingsPage />} />
 				</Route>

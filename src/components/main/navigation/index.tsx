@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill, GoProject, GoGear } from "react-icons/go";
+import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill, GoProject, GoGear, GoPerson } from "react-icons/go";
 import { cn } from "@/lib/utils.ts";
 import { IconType } from "react-icons";
 
@@ -29,6 +29,12 @@ const routes: RouteItem[] = [
         href: "/projects",
         icon: GoProject,
         activeIcon: GoProject,
+    },
+    {
+        label: "Пользователи",
+        href: "/users",
+        icon: GoPerson,
+        activeIcon: GoPerson,
     },
     {
         label: "Настройки",

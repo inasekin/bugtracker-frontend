@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { useFetch } from "./data/use-fetch"
-import { ProjectDto } from "./data/project-dto"
 import { useNavigate } from "react-router-dom"
+import { useProjects } from "@/api/projects"
 
 import {
   Card,
@@ -15,43 +14,26 @@ import { ProjectRecord, columns } from "@/components/project/project-tables/proj
 
 import { DataTable } from "@/components/project/project-tables/data-table"
 
-function getData(): ProjectRecord[] {
-  return [
-    {
-      id: "1",
-      name: "Тест",
-      description: "Тестовый проект",
-      url: '/test',
-      command: "Редактировать"
-    }
-  ];
+function mapProjectsToRecords(projects: any[]): ProjectRecord[] {
+  if (!projects || !Array.isArray(projects)) {
+    return [];
+  }
+  
+  return projects.map(project => ({
+    id: project.id,
+    name: project.name,
+    url: `/projects/${project.id}`,
+    description: project.description,
+    command: "Редактировать"
+  }));
 }
-
-function fromJson(json: any): ProjectRecord[] {
-  if(json == null)
-    return {} as ProjectRecord[];
-  let result = (json as Array<ProjectRecord>).map(val => { 
-    return {
-      id: val.id,
-      name: val.name,
-      url: '/projects/' + val.id,
-      description: val.description,
-      command: "Редактировать"
-    }
-  }) as ProjectRecord[];
-  return result;
-}
-
-
 
 export function ProjectsList() {
-
-  //const data = getData();
-  const data = useFetch<ProjectDto>('/api/project');
+  const { projects, loading, error } = useProjects();
   const navigate = useNavigate();
 
-  const newProject = () => {
-    navigate('/projects?command=new')
+  const handleNewProject = () => {
+    navigate('/projects?command=new');
   };
 
   return (
@@ -64,12 +46,22 @@ export function ProjectsList() {
       </CardHeader>
       <CardContent>
       	<div className="container mx-auto ">
-      		<DataTable columns={columns} data={fromJson(data)} />
+      		{loading ? (
+      			<div className="text-center py-8">
+      				<p className="text-slate-500">Загрузка проектов...</p>
+      			</div>
+      		) : error ? (
+      			<div className="text-center py-8 text-red-500">
+      				<p>Ошибка: {error}</p>
+      			</div>
+      		) : (
+      			<DataTable columns={columns} data={mapProjectsToRecords(projects)} />
+      		)}
 	      </div>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button id="addProject" onClick={()=> newProject() }>Новый проект...</Button>
-        <Button id="back" onClick={ ()=> history.back() }>Назад</Button>
+        <Button id="addProject" onClick={handleNewProject}>Новый проект...</Button>
+        <Button id="back" onClick={() => history.back()} variant="outline">Назад</Button>
       </CardFooter>
     </Card>
   )

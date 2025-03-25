@@ -1,12 +1,5 @@
 import { Label } from "@/components/ui/label"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
   Card,
   CardContent,
   CardDescription,
@@ -45,7 +38,7 @@ export function ProjectAddUserDialog({ userRole, setUserRole } : ProjectAddUserD
     let roles = userRole.userRoles ? userRole.userRoles.split(",") : [];
     return roles.includes(role);
   };
-  
+
   const setChecked = (role: string, checked: boolean) => {
     console.log("checked");
     let rolesStr = "";
@@ -54,7 +47,7 @@ export function ProjectAddUserDialog({ userRole, setUserRole } : ProjectAddUserD
     {
       if(!roles.includes(role))
         roles.push(role);
-      rolesStr = roles.join(",");  
+      rolesStr = roles.join(",");
     }
     else {
       roles = roles.filter(e => e !== role);
