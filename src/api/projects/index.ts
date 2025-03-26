@@ -40,13 +40,14 @@ export function useProjects() {
         setLoading(true);
         const response = await fetch(`${API_URL}/api/project`, {
           method: "GET",
+          credentials: "include",
           mode: 'cors'
         });
-        
+
         if (!response.ok) {
           throw new Error('Ошибка при получении проектов');
         }
-        
+
         const data = await response.json();
         setProjects(data);
       } catch (err) {
@@ -78,13 +79,14 @@ export function useProject(projectId?: string) {
         setLoading(true);
         const response = await fetch(`${API_URL}/api/project/${projectId}`, {
           method: "GET",
+          credentials: "include",
           mode: 'cors'
         });
-        
+
         if (!response.ok) {
           throw new Error('Ошибка при получении проекта');
         }
-        
+
         const data = await response.json();
         setProject(data);
       } catch (err) {
@@ -106,13 +108,14 @@ export function useProject(projectId?: string) {
           'Content-Type': 'application/json',
         },
         mode: 'cors',
+        credentials: "include",
         body: JSON.stringify(updatedProject),
       });
-      
+
       if (!response.ok) {
         throw new Error('Ошибка при обновлении проекта');
       }
-      
+
       const data = await response.json();
       setProject(data);
       return { success: true, data };
@@ -134,13 +137,14 @@ export function useProject(projectId?: string) {
       setLoading(true);
       const response = await fetch(`${API_URL}/api/project/${projectId}`, {
         method: "DELETE",
+        credentials: "include",
         mode: 'cors'
       });
-      
+
       if (!response.ok) {
         throw new Error('Ошибка при удалении проекта');
       }
-      
+
       return { success: true };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Ошибка при удалении проекта';
@@ -151,12 +155,12 @@ export function useProject(projectId?: string) {
     }
   };
 
-  return { 
-    project, 
-    setProject, 
-    loading, 
-    error, 
+  return {
+    project,
+    setProject,
+    loading,
+    error,
     updateProject,
     deleteProject
   };
-} 
+}

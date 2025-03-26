@@ -39,7 +39,7 @@ export const UserButton = () => {
             <DropdownMenuContent
                 align="end"
                 side="bottom"
-                className="w-60"
+                className="w-60 bg-white"
                 sideOffset={10}
             >
                 <div className="flex flex-col items-center justify-center gap-2 px-2.5 py-4">

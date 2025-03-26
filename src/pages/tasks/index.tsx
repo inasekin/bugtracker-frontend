@@ -90,7 +90,7 @@ export const TasksPage = () => {
   return (
     <div className="container mx-auto py-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Задачи</h1>
+        <h1 className="text-2xl font-bold">Панель управления</h1>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
             <Filter className="h-4 w-4 mr-2" />
@@ -104,7 +104,7 @@ export const TasksPage = () => {
       </div>
 
       <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-12 md:col-span-3 lg:col-span-2">
+        <div className="col-span-12 md:col-span-12 lg:col-span-12">
           <div className="bg-white rounded-lg shadow p-3">
             <h2 className="font-medium text-lg mb-3">Проекты</h2>
 
@@ -143,7 +143,7 @@ export const TasksPage = () => {
           </div>
         </div>
 
-        <div className="col-span-12 md:col-span-9 lg:col-span-10">
+        <div className="col-span-12 md:col-span-12 lg:col-span-12">
           {tasksLoading ? (
             <div className="text-center py-8">
               <p className="text-slate-500">Загрузка задач...</p>
