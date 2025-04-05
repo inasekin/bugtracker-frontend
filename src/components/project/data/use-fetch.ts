@@ -10,7 +10,7 @@ export function useFetchState<T>(url: string, defVal: T): [T, React.Dispatch<Rea
       const requestUrl = serverUrl + url;
       const response = await fetch(requestUrl, {
           method: "GET",
-          //credentials: "include",
+          credentials: "include",
           mode: 'cors'
       });
       const json = await response.json();
@@ -31,7 +31,7 @@ export function useFetch<T>(url: string) : T
       const requestUrl = serverUrl + url;
       const response = await fetch(requestUrl, {
           method: "GET",
-          //credentials: "include",
+          credentials: "include",
           mode: 'cors'
       });
       const json = await response.json();

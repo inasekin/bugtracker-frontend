@@ -1,5 +1,12 @@
 import { Label } from "@/components/ui/label"
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
   Card,
   CardContent,
   CardDescription,
@@ -9,6 +16,8 @@ import {
 } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "../ui/input"
+import { useFetch } from "./data/use-fetch"
+import { UserDto } from "./data/project-dto"
 
 export type UserRole = {
   userId: string,
@@ -22,6 +31,11 @@ export type ProjectAddUserDialogProps = {
 }
 
 export function ProjectAddUserDialog({ userRole, setUserRole } : ProjectAddUserDialogProps) {
+
+  const users = useFetch<UserDto[]>('/api/user');
+  const usersList = users ? users.map(u=>(
+    <SelectItem value={u.name}>{u.name}</SelectItem>
+  )) : null;
 
   const roleManager = "Менеджер проекта";
   const roleDeveloper = "Разработчик";
@@ -38,7 +52,7 @@ export function ProjectAddUserDialog({ userRole, setUserRole } : ProjectAddUserD
     let roles = userRole.userRoles ? userRole.userRoles.split(",") : [];
     return roles.includes(role);
   };
-
+  
   const setChecked = (role: string, checked: boolean) => {
     console.log("checked");
     let rolesStr = "";
@@ -47,7 +61,7 @@ export function ProjectAddUserDialog({ userRole, setUserRole } : ProjectAddUserD
     {
       if(!roles.includes(role))
         roles.push(role);
-      rolesStr = roles.join(",");
+      rolesStr = roles.join(",");  
     }
     else {
       roles = roles.filter(e => e !== role);
@@ -71,17 +85,14 @@ export function ProjectAddUserDialog({ userRole, setUserRole } : ProjectAddUserD
           <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-2">
                 <Label htmlFor="parentProject">Пользователь</Label>
-                <Input value={userRole.userName} onChange={(e) => setUserName(e.target.value)}></Input>
-                {/*<Select value={userRole.userId}>
+                <Select onValueChange={setUserName} defaultValue={userRole.userName}>
                   <SelectTrigger id="framework">
-                    <SelectValue placeholder="Select" />
+                    <SelectValue placeholder="Выберите пользователя" />
                   </SelectTrigger>
                   <SelectContent position="popper" className="bg-white">
-                    <SelectItem value="Иванов">Иванов</SelectItem>
-                    <SelectItem value="Петров">Петров</SelectItem>
-                    <SelectItem value="Сидоров">Сидоров</SelectItem>
+                    {usersList}
                   </SelectContent>
-                </Select>*/}
+                </Select>
               </div>
               <div className="flex flex-row space-y-2 gap-4">
                 <Checkbox checked={isChecked(roleManager)} onCheckedChange={() => setChecked(roleManager, !isChecked(roleManager))} /> <label htmlFor="terms1">{roleManager}</label>

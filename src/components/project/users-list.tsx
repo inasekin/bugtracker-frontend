@@ -13,6 +13,7 @@ import { UserRolesRecord, columns } from "@/components/project/project-tables/us
 import { DataTable } from "@/components/project/project-tables/data-table"
 import {ProjectContext} from "./data/project-context"
 import { ProjectAddUserDialog, UserRole } from "./project-add-user-card"
+import { toast } from 'react-toastify';
 
 /*
 function getData(): UserRolesRecord[] {
@@ -62,7 +63,9 @@ export type UserRecord = {
   email: string
 }
 
-function userRolesFromProject(userRolesDto: UserRoleDictionary): UserRolesRecord[] {
+export type ItemAction = (record: string) => any;
+
+function userRolesFromProject(userRolesDto: UserRoleDictionary, editAction: ItemAction, deleteAction: ItemAction): UserRolesRecord[] {
   if(userRolesDto == null)
     return {} as UserRolesRecord[];
    
@@ -71,30 +74,56 @@ function userRolesFromProject(userRolesDto: UserRoleDictionary): UserRolesRecord
     userRoles.push({
       id: key,
       user: key,
-      roles: userRolesDto[key],
-      command: "Редактировать"      
+      roles: userRolesDto[key].join(','),
+      commands: [{
+          name: "Редактировать",
+          variant:"secondary",
+          action: (e) => editAction(key)
+        }, {
+          name: "Удалить",
+          variant:"destructive",
+          action: (e) => deleteAction(key)          
+        }]
     } as UserRolesRecord);
   }
   return userRoles;
 }
 
-
 export function UsersList() {
-
-  //const data = useFetch('/api/project');
-  // const data = useFetch('/api/user');
-  //const data = getData();
 
   const { project, setProject } = useContext(ProjectContext);
   const [ userRole, setUserRole ] = useState({} as UserRole);
   const [ userRoleDlgShowed, setUserRoleDlgShowed ] = useState(false);
 
   const addUser = () => {
+    if(!userRole.userName){
+      toast.error("Не выбран пользователь");
+      return;
+    }
     let newProject = {...project};
     newProject.userRoles = {...newProject.userRoles};
-    newProject.userRoles[userRole.userName] = userRole.userRoles;
+    newProject.userRoles[userRole.userName] = userRole.userRoles ? userRole.userRoles.split(',') : [];
     setProject(newProject);
     setUserRoleDlgShowed(false);
+  };
+
+  const editUser = (userName: string) => {
+
+    const roles = project.userRoles[userName];
+    const userRole = {
+      userId: userName,
+      userName: userName,
+      userRoles: roles.join(',')
+    } as UserRole;
+    setUserRole(userRole);
+    setUserRoleDlgShowed(true);
+  };
+
+  const deleteUser = (userName:string) => {
+    let newProject = {...project};
+    newProject.userRoles = {...newProject.userRoles};
+    delete newProject.userRoles[userName];
+    setProject(newProject);
   };
 
   const showAddUserDlg = () => {
@@ -121,7 +150,7 @@ export function UsersList() {
         </CardHeader>
         <CardContent>
         <div className="container mx-auto ">
-            <DataTable columns={columns} data={ userRolesFromProject(project.userRoles)} />
+            <DataTable columns={columns} data={ userRolesFromProject(project.userRoles, editUser, deleteUser)} />
         </div>
         </CardContent>
         <CardFooter className="flex justify-between">

@@ -7,8 +7,12 @@ export type IssueCategoryDto = {
   userId?: string;
 };
 
+export interface Dictionary<T> {
+  [Key: string]: T;
+};
+
 export type UserRoleDictionary = {
-  [Key: string]: string;
+  [Key: string]: string[];
 };
 
 export type ProjectDto = {
@@ -33,7 +37,7 @@ export function useProjects() {
   const [projects, setProjects] = useState<ProjectDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -57,7 +61,7 @@ export function useProjects() {
       }
     };
 
-    fetchProjects();
+    fetchProjects();    
   }, []);
 
   return { projects, loading, error };
@@ -116,9 +120,18 @@ export function useProject(projectId?: string) {
         throw new Error('Ошибка при обновлении проекта');
       }
 
-      const data = await response.json();
-      setProject(data);
-      return { success: true, data };
+      if(projectId) 
+      {
+        // PUT метод не возвращает ничего, поэтому будет ошибка на response.json()
+        return { success: true, updatedProject };
+      }
+      else
+      {
+        // Если создали новый объект, то вернёт объект с id
+        const data = await response.json();
+        setProject(data);
+        return { success: true, data };
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Ошибка при обновлении проекта';
       setError(errorMessage);

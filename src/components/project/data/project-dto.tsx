@@ -3,7 +3,7 @@ export interface Dictionary<T> {
 };
 
 export interface UserRoleDictionary {
-    [Key: string]: string;
+    [Key: string]: string[];
 };
 
 export type IssueCategoryDto = {

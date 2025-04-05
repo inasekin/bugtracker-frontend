@@ -1,11 +1,12 @@
 import { ColumnDef } from "@tanstack/react-table"
 import {Button} from "@/components/ui/button.tsx";
+import {ColumnCommand} from "./column-command";
 
 export type UserRolesRecord = {
   id: string
   user: string
   roles: string
-  command: string
+  commands: ColumnCommand[]
 }
 
 export const columns: ColumnDef<UserRolesRecord>[] = [
@@ -27,10 +28,15 @@ export const columns: ColumnDef<UserRolesRecord>[] = [
     header: "",
     cell: ({ row }) => {
       const userRoles = row.original;
-      const command = userRoles.command;
+      const listCommands = userRoles.commands.map((cmd) =>
+	      <Button variant={cmd.variant} onClick={cmd.action}>{cmd.name}</Button>
+      );
+
+      // secondary
+      // destructive
+
       return (<div className="flex justify-end gap-2">
-	      <Button variant="secondary">{command}</Button>
-        <Button variant="destructive">Удалить</Button>
+        {listCommands}
       </div>);
     }
   },

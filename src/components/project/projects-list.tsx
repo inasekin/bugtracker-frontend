@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { useProjects } from "@/api/projects"
-
 import {
   Card,
   CardContent,
@@ -29,6 +28,7 @@ function mapProjectsToRecords(projects: any[]): ProjectRecord[] {
 }
 
 export function ProjectsList() {
+
   const { projects, loading, error } = useProjects();
   const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ export function ProjectsList() {
       </CardHeader>
       <CardContent>
       	<div className="container mx-auto ">
-      		{loading ? (
+        {loading ? (
       			<div className="text-center py-8">
       				<p className="text-slate-500">Загрузка проектов...</p>
       			</div>
@@ -61,7 +61,7 @@ export function ProjectsList() {
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button id="addProject" onClick={handleNewProject}>Новый проект...</Button>
-        <Button id="back" onClick={() => history.back()} variant="outline">Назад</Button>
+        <Button id="back" onClick={()=> history.back()} variant="outline">Назад</Button>
       </CardFooter>
     </Card>
   )

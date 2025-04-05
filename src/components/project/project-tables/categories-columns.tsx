@@ -25,10 +25,13 @@ export const columns: ColumnDef<CategoryRecord>[] = [
     accessorKey: "command",
     header: "",
     cell: ({ row }) => {
-      const command = row.original.command;
+      const commands = row.original.commands;
+      const listCommands = commands.map((cmd) =>
+	      <Button key={cmd.name} variant={cmd.variant} onClick={cmd.action}>{cmd.name}</Button>
+      );
+
       return (<div className="flex justify-end gap-2">
-	      <Button variant="secondary">{command}</Button>
-        <Button variant="destructive">Удалить</Button>
+        {listCommands}
       </div>);
     }
   },

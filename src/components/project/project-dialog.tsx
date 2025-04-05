@@ -1,16 +1,22 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { TabsList, Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { ProjectCard } from "@/components/project/project-card";
-import { UsersList } from "@/components/project/users-list";
-import { VersionsList } from "@/components/project/versions-list";
-import { CategoriesList } from "@/components/project/categories-list";
-import { ProjectContext } from "./data/project-context";
-
+import {TabsList, Tabs, TabsContent, TabsTrigger} from "@/components/ui/tabs";
+import {ProjectCard} from "@/components/project/project-card";
+import {UsersList} from "@/components/project/users-list";
+import {VersionsList} from "@/components/project/versions-list";
+import {CategoriesList} from "@/components/project/categories-list";
+import {Button} from "@/components/ui/button"
+import {ProjectContext} from "./data/project-context"
+import {useNavigate} from "react-router-dom";
+import {useEffect} from "react"
 import { useProject, defaultProjectDto } from "@/api/projects";
+
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 
 export type ProjectDialogProps = {
     projectId?: string,
@@ -18,6 +24,7 @@ export type ProjectDialogProps = {
 };
 
 export const ProjectDialog = ({ projectId, isNewProject }: ProjectDialogProps) => {
+
     const {
         project,
         setProject,
@@ -82,41 +89,41 @@ export const ProjectDialog = ({ projectId, isNewProject }: ProjectDialogProps) =
     return (
         <ProjectContext.Provider value={{ project, setProject }}>
             <Card>
-                <CardHeader>
-                    <CardTitle>
+            <CardHeader>
+            <CardTitle>
                         {isNewProject ? 'Создание нового проекта' : `Редактирование проекта: ${project.name}`}
-                    </CardTitle>
-                    <CardDescription>
-                        Проект - основа для управления задачами. Содержит задачи.
-                        На проект назначаются пользователи с определенными ролями.
-                        Для проекта можно задать список версий и список доступных категорий (модулей/подпроектов)
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <Tabs defaultValue="project" className="flex flex-col items-start">
-                        <TabsList>
-                            <TabsTrigger value="project">Свойства</TabsTrigger>
-                            <TabsTrigger value="users">Пользователи</TabsTrigger>
-                            <TabsTrigger value="versions">Версии</TabsTrigger>
-                            <TabsTrigger value="categories">Категории</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="project" className="w-full">
-                            <ProjectCard />
-                        </TabsContent>
-                        <TabsContent value="users" className="w-full">
-                            <UsersList />
-                        </TabsContent>
-                        <TabsContent value="versions" className="w-full">
-                            <VersionsList />
-                        </TabsContent>
-                        <TabsContent value="categories" className="w-full">
-                            <CategoriesList />
-                        </TabsContent>
-                    </Tabs>
-                </CardContent>
+            </CardTitle>
+            <CardDescription>
+                Проект - основа для управления задачами. Содержит задачи. 
+                На проект назначаются пользователи с определенными ролями. 
+                Для проекта можно задать список версий и список доступных категорий (модулей/подпроектов)
+            </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Tabs defaultValue="project" className="flex flex-col items-start">
+                    <TabsList>
+                        <TabsTrigger value="project">Свойства</TabsTrigger>
+                        <TabsTrigger value="users">Пользователи</TabsTrigger>
+                        <TabsTrigger value="versions">Версии</TabsTrigger>
+                        <TabsTrigger value="categories">Категории</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="project" className="w-full">
+                        <ProjectCard />
+                    </TabsContent>
+                    <TabsContent value="users" className="w-full">
+                        <UsersList />
+                    </TabsContent>
+                    <TabsContent value="versions" className="w-full">
+                        <VersionsList />
+                    </TabsContent>
+                    <TabsContent value="categories" className="w-full">
+                        <CategoriesList />
+                    </TabsContent>
+                </Tabs>
+            </CardContent>
                 <CardFooter className="flex items-start gap-4">
-                    <Button id="saveButton" onClick={handleSave}>Сохранить</Button>
-                    <Button id="back" onClick={() => navigate('/projects')} variant="outline">Отмена</Button>
+                <Button id="saveButton" onClick={handleSave}>Сохранить</Button>
+                <Button id="back" onClick={() => navigate('/projects')} variant="outline">Отмена</Button>
                 </CardFooter>
             </Card>
         </ProjectContext.Provider>
