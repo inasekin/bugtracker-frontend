@@ -33,7 +33,9 @@ export function ProjectsList() {
   const navigate = useNavigate();
 
   const handleNewProject = () => {
-    navigate('/projects?command=new');
+    // Необходим иначе react запоминает компонент и всегда один и тот же подсовывает (с прошлого создания нового объекта)
+    const refreshId = Date.now();
+    navigate(`/projects/${refreshId}?command=new`);
   };
 
   return (

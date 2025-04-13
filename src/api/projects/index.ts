@@ -39,10 +39,11 @@ export function useProjects() {
   const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
+    const refreshId = Date.now();
     const fetchProjects = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_URL}/api/project`, {
+        const response = await fetch(`${API_URL}/api/project?refreshId=${refreshId}`, {
           method: "GET",
           credentials: "include",
           mode: 'cors'
@@ -81,7 +82,8 @@ export function useProject(projectId?: string) {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_URL}/api/project/${projectId}`, {
+        const refreshId = Date.now();
+        const response = await fetch(`${API_URL}/api/project/${projectId}?refreshId=${refreshId}`, {
           method: "GET",
           credentials: "include",
           mode: 'cors'
@@ -106,7 +108,8 @@ export function useProject(projectId?: string) {
   const updateProject = async (updatedProject: ProjectDto) => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/api/project${projectId ? `/${projectId}` : ''}`, {
+      const refreshId = Date.now(); // Кэширование настолько крутое в прокси, что даже put/post запросы не пропускает
+      const response = await fetch(`${API_URL}/api/project${projectId ? `/${projectId}` : ''}?refreshId=${refreshId}`, {
         method: projectId ? "PUT" : "POST",
         headers: {
           'Content-Type': 'application/json',
