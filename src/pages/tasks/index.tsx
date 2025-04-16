@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { TaskDialog } from '@/components/task/task-dialog'
 
 type KanbanColumn = {
   id: TaskStatus;
@@ -24,12 +25,14 @@ const kanbanColumns: KanbanColumn[] = [
   { id: 'done', title: 'Выполнено' }
 ];
 
+
 export const TasksPage = () => {
   const { projects, loading: projectsLoading } = useProjects();
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [ selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const { tasks, loading: tasksLoading } = useTasks(selectedProjectId || undefined);
-  const [_, setShowTaskForm] = useState(false);
-
+  const [ showTaskForm, setShowTaskForm] = useState(false);
+  const [ selectedTaskId, setSelectedTaskId] = useState<string | undefined>(undefined);
+  
   // Выбираем первый проект автоматически при загрузке проектов
   useEffect(() => {
     if (projects && projects.length > 0 && !selectedProjectId) {
@@ -83,9 +86,23 @@ export const TasksPage = () => {
       alert('Пожалуйста, выберите проект перед созданием задачи');
       return;
     }
-
+    setSelectedTaskId(undefined);
+    setShowTaskForm(true);
+  };  
+  
+  const handleEditTask = (taskId: string) => {
+    setSelectedTaskId(taskId);
     setShowTaskForm(true);
   };
+
+  const handleTaskAdded = () => {
+    setShowTaskForm(false);
+  };
+
+  if(showTaskForm)
+  {
+    return (<TaskDialog taskId={selectedTaskId} projectId={selectedProjectId as string} onClosed={handleTaskAdded}></TaskDialog>);
+  }
 
   return (
     <div className="container mx-auto py-6">
@@ -196,7 +213,7 @@ export const TasksPage = () => {
                       {groupedTasks[column.id].length > 0 ? (
                         <div className="space-y-2">
                           {groupedTasks[column.id].map((task) => (
-                            <Card key={task.id} className="cursor-pointer hover:shadow-md transition-shadow">
+                            <Card key={task.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => handleEditTask(task.id)}>
                               <CardContent className="p-3">
                                 <div className="flex items-center justify-between mb-2">
                                   <span className="text-xs text-slate-500">#{task.id}</span>

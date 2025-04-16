@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
-// const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+//const API_URL = 'http://localhost:5000';
 
 export type TaskPriority = 'low' | 'medium' | 'high' | 'critical';
 export type TaskType = 'task' | 'bug' | 'feature';
@@ -104,6 +105,7 @@ export function useTasks(projectId?: string) {
         setLoading(true);
 
         // Моковые данные - потом заменим на реальный API
+        /*
         setTimeout(() => {
           let filteredTasks = [...mockTasks];
           if (projectId) {
@@ -112,11 +114,12 @@ export function useTasks(projectId?: string) {
           setTasks(filteredTasks);
           setLoading(false);
         }, 500);
-
-        /*
+        */
         // Код для реального API
-        const response = await fetch(`${API_URL}/api/tasks${projectId ? `?projectId=${projectId}` : ''}`, {
+        const url = `${API_URL}/api/issues${projectId ? `?projectId=${projectId}` : ''}`;
+        const response = await fetch(url, {
           method: "GET",
+          //credentials: "include",
           mode: 'cors'
         });
 
@@ -126,9 +129,12 @@ export function useTasks(projectId?: string) {
 
         const data = await response.json();
         setTasks(data);
-        */
+
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Ошибка при получении задач');
+        setLoading(false);
+      }
+      finally {
         setLoading(false);
       }
     };
@@ -139,17 +145,47 @@ export function useTasks(projectId?: string) {
   return { tasks, loading, error };
 }
 
-export function useTask(taskId: string) {
+/*
+export const GetDefaultTaskDto = (projectId: string, userId: string) : TaskDto => {
+  return {
+    id: "",
+    title: "Новая задача",
+    description: "",
+    status: "todo",
+    priority: "medium",
+    type: "feature",
+    projectId: projectId,
+    assigneeId?: userId,
+  } as TaskDto;
+};
+*/
+export function useTask(taskId?: string) {
   const [task, setTask] = useState<TaskDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!taskId) {
+      /*setTask({
+        id: "",
+        title: "",
+        description: "",
+        status: "todo",
+        priority: "medium",
+        type: "feature",
+        projectId: "",
+        assigneeId: "",
+      } as TaskDto);*/
+      setLoading(false);
+      return;
+    }
+
     const fetchTask = async () => {
       try {
         setLoading(true);
 
         // Моковые данные - потом заменим на реальный API
+        /*
         setTimeout(() => {
           const foundTask = mockTasks.find(task => task.id === taskId);
           if (foundTask) {
@@ -158,12 +194,13 @@ export function useTask(taskId: string) {
             setError('Задача не найдена');
           }
           setLoading(false);
-        }, 500);
+        }, 500);*/
 
-        /*
         // Код для реального API
-        const response = await fetch(`${API_URL}/api/tasks/${taskId}`, {
+        const refreshId = Date.now(); // Кэширование настолько крутое в прокси, что даже put/post запросы не пропускает
+        const response = await fetch(`${API_URL}/api/issues/${taskId}?refreshId=${refreshId}`, {
           method: "GET",
+          //credentials: "include",
           mode: 'cors'
         });
 
@@ -173,9 +210,12 @@ export function useTask(taskId: string) {
 
         const data = await response.json();
         setTask(data);
-        */
+
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Ошибка при получении задачи');
+        
+      }
+      finally {
         setLoading(false);
       }
     };
@@ -183,5 +223,71 @@ export function useTask(taskId: string) {
     fetchTask();
   }, [taskId]);
 
-  return { task, loading, error };
+  const updateTask = async (updatedTask: TaskDto) => {
+    try {
+      setLoading(true);
+      const refreshId = Date.now(); // Кэширование настолько крутое в прокси, что даже put/post запросы не пропускает
+      const response = await fetch(`${API_URL}/api/issues${taskId ? `/${taskId}` : ''}?refreshId=${refreshId}`, {
+        method: taskId ? "PUT" : "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        //credentials: "include",
+        body: JSON.stringify(updatedTask),
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка при обновлении задачи');
+      }
+
+      if(taskId) 
+      {
+        // PUT метод не возвращает ничего, поэтому будет ошибка на response.json()
+        return { success: true, updatedTask };
+      }
+      else
+      {
+        // Если создали новый объект, то вернёт объект с id
+        const data = await response.json();
+        setTask(data);
+        return { success: true, data };
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Ошибка при обновлении проекта';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteTask = async () => {
+    if (!taskId) {
+      return { success: false, error: 'ID задачи не указан' };
+    }
+
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_URL}/api/issues/${taskId}`, {
+        method: "DELETE",
+        //credentials: "include",
+        mode: 'cors'
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка при удалении проекта');
+      }
+
+      return { success: true };
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Ошибка при удалении проекта';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { task, setTask, loading, error, updateTask, deleteTask };
 }
