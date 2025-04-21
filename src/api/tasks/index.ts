@@ -26,6 +26,7 @@ export type TaskDto = {
   createdAt: string;
   updatedAt: string;
   dueDate?: string;
+  files?: File[];
 };
 
 // Временные моковые данные для задач, пока нет API
@@ -94,7 +95,7 @@ const mockTasks: TaskDto[] = [
   }
 ];
 
-export function useTasks(projectId?: string) {
+export function useTasks(projectId?: string, refreshId: string) {
   const [tasks, setTasks] = useState<TaskDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -103,7 +104,6 @@ export function useTasks(projectId?: string) {
     const fetchTasks = async () => {
       try {
         setLoading(true);
-
         // Моковые данные - потом заменим на реальный API
         /*
         setTimeout(() => {
@@ -116,10 +116,10 @@ export function useTasks(projectId?: string) {
         }, 500);
         */
         // Код для реального API
-        const url = `${API_URL}/api/issues${projectId ? `?projectId=${projectId}` : ''}`;
+        const url = `${API_URL}/api/issues${projectId ? `?projectId=${projectId}&refreshId=${refreshId}` : ''}`;
         const response = await fetch(url, {
           method: "GET",
-          //credentials: "include",
+          credentials: "include",
           mode: 'cors'
         });
 
@@ -140,7 +140,7 @@ export function useTasks(projectId?: string) {
     };
 
     fetchTasks();
-  }, [projectId]);
+  }, [projectId, refreshId]);
 
   return { tasks, loading, error };
 }
@@ -200,7 +200,7 @@ export function useTask(taskId?: string) {
         const refreshId = Date.now(); // Кэширование настолько крутое в прокси, что даже put/post запросы не пропускает
         const response = await fetch(`${API_URL}/api/issues/${taskId}?refreshId=${refreshId}`, {
           method: "GET",
-          //credentials: "include",
+          credentials: "include",
           mode: 'cors'
         });
 
@@ -227,13 +227,14 @@ export function useTask(taskId?: string) {
     try {
       setLoading(true);
       const refreshId = Date.now(); // Кэширование настолько крутое в прокси, что даже put/post запросы не пропускает
+      console.log("update: " + `${API_URL}/api/issues${taskId ? `/${taskId}` : ''}?refreshId=${refreshId}`);
       const response = await fetch(`${API_URL}/api/issues${taskId ? `/${taskId}` : ''}?refreshId=${refreshId}`, {
         method: taskId ? "PUT" : "POST",
         headers: {
           'Content-Type': 'application/json',
         },
         mode: 'cors',
-        //credentials: "include",
+        credentials: "include",
         body: JSON.stringify(updatedTask),
       });
 
@@ -271,7 +272,7 @@ export function useTask(taskId?: string) {
       setLoading(true);
       const response = await fetch(`${API_URL}/api/issues/${taskId}`, {
         method: "DELETE",
-        //credentials: "include",
+        credentials: "include",
         mode: 'cors'
       });
 

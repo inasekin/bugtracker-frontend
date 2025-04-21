@@ -39,7 +39,7 @@ export function useProjects() {
   const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
-    const refreshId = Date.now();
+    const refreshId = Date.now();    
     const fetchProjects = async () => {
       try {
         setLoading(true);
@@ -62,6 +62,7 @@ export function useProjects() {
       }
     };
 
+    console.log("fetchProjects: " + `${API_URL}/api/project?refreshId=${refreshId})`);
     fetchProjects();    
   }, []);
 

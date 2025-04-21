@@ -23,7 +23,8 @@ import {
 } from "@/components/ui/select"
 import { TaskComments } from "./task-comments";
 import { TaskFiles } from "./task-files";
-
+import { useState } from "react";
+import { uploadFilesAsync } from "@/api/files";
 
 export type TaskDialogProps = {
     taskId?: string,
@@ -45,6 +46,8 @@ export const TaskDialog = ({ taskId, projectId, onClosed } : TaskDialogProps) =>
         updateTask,
         deleteTask
     } = useTask(isNewTask ? undefined : taskId);
+
+    const [files, setFiles] = useState([]);
 
     const navigate = useNavigate();
 
@@ -74,12 +77,45 @@ export const TaskDialog = ({ taskId, projectId, onClosed } : TaskDialogProps) =>
         <SelectItem value={u.name}>{u.description}</SelectItem>
     ));
 
+    /*
+    const uploadFiles = async () => {
+
+        if(files.length == 0)
+            return ;
+
+        const formData = new FormData();
+        files.forEach((file, index) => {
+            formData.append(`file${index}`, file);
+        });
+
+        const response = await fetch(`http://localhost:5005/api/file`, {
+            method: "POST",
+            mode: 'cors',
+            //credentials: "include",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error('Ошибка при обновлении задачи');
+        }
+
+        // Если создали новый объект, то вернёт объект с id
+        const res = await response.json();
+        alert(res.id);
+    };*/
+
     const handleSave = async () => {
         try {
-            if(!(task?.description))
+            if(!(task?.description)) {
                 alert("Не заполнено описание");
+                return;
+            }
 
-            const taskProject = {...task, projectId: projectId} as TaskDto;
+            const uploadedFiles = await uploadFilesAsync(files);
+            let taskFiles = task.files != null ? task.files : [];
+            taskFiles = taskFiles.concat(uploadedFiles);
+
+            const taskProject = {...task, projectId: projectId, files: taskFiles } as TaskDto;
             const result = await updateTask(taskProject as TaskDto);
             if (result.success) {
                 onClosed();
@@ -185,11 +221,11 @@ export const TaskDialog = ({ taskId, projectId, onClosed } : TaskDialogProps) =>
                     </Select>
                 </div>
 
+                {!isNewTask && <TaskFiles taskId={task?.id as string} files={files} setFiles={setFiles} oldFiles={task.files}></TaskFiles>}
 
                 <Button id="saveButton" onClick={handleSave}>Сохранить</Button>
                 <Button id="back" onClick={() => onClosed()} variant="outline">Отмена</Button>
 
-                {!isNewTask && <TaskFiles taskId={task?.id as string} ></TaskFiles>}
                 {!isNewTask && <TaskComments taskId={task?.id as string} ></TaskComments>}
                 
             </form>

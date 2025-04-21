@@ -27,9 +27,10 @@ const kanbanColumns: KanbanColumn[] = [
 
 
 export const TasksPage = () => {
+  const [ refreshId, setRefreshId ] = useState<string>(Date.now().toString());
   const { projects, loading: projectsLoading } = useProjects();
   const [ selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-  const { tasks, loading: tasksLoading } = useTasks(selectedProjectId || undefined);
+  const { tasks, loading: tasksLoading } = useTasks(selectedProjectId || undefined, refreshId);
   const [ showTaskForm, setShowTaskForm] = useState(false);
   const [ selectedTaskId, setSelectedTaskId] = useState<string | undefined>(undefined);
   
@@ -96,6 +97,7 @@ export const TasksPage = () => {
   };
 
   const handleTaskAdded = () => {
+    setRefreshId(Date.now().toString());
     setShowTaskForm(false);
   };
 
@@ -119,6 +121,7 @@ export const TasksPage = () => {
           </Button>
         </div>
       </div>
+      {refreshId}
 
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 md:col-span-12 lg:col-span-12">
