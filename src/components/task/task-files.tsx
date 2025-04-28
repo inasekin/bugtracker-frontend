@@ -3,18 +3,32 @@ import {
     CardContent,
     CardHeader
 } from "@/components/ui/card"
-import {
-    Button
-} from "@/components/ui/button"
+
+import { Input } from "@/components/ui/input"
+import { File } from "@/api/files"
 
 export type TaskFilesProps = {
-    taskId: string
+    taskId: string,
+    oldFiles?: File[];
+    files: any,
+    setFiles: any
 };
 
-export const TaskFiles = ({ taskId } : TaskFilesProps) => {
+export const TaskFiles = ({ taskId, files, setFiles, oldFiles} : TaskFilesProps) => {
 
-    // TODO: по аналогии с проектами useProjects
-    // const comments = useComments(taskId); 
+    function handleMultipleChange(event) {
+        setFiles([...event.target.files]);
+    }
+
+    const oldFileList = [];
+    if(oldFiles)
+        oldFiles.forEach(file => {
+        oldFileList.push((<div key={file.id}>
+            <a href="http://localhost">
+                {file.name}
+                </a>
+        </div>));
+    });
 
     return (
         <Card>
@@ -22,8 +36,13 @@ export const TaskFiles = ({ taskId } : TaskFilesProps) => {
                 Файлы:
             </CardHeader>
             <CardContent>
-                <div>TODO: Добавить добавление файлов для задачи {taskId}</div>
-                <Button className="m-2" onClick={() => alert("TODO") }>Добавить файл...</Button>
+                <div>
+                    {oldFileList}
+                </div>
+                
+                <div></div>
+                <div className="m-2">Добавить файлы: </div>
+                <Input id="picture" type="file" multiple onChange={handleMultipleChange} />
             </CardContent>
         </Card>
     );
