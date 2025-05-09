@@ -1,6 +1,7 @@
 import {Button} from "@/components/ui/button"
 import {useNavigate} from "react-router-dom";
 import { useProject } from "@/api/projects";
+import { useCurrent } from "@/api/auth/use-current";
 
 import {
     Card,
@@ -35,6 +36,9 @@ export type TaskDialogProps = {
 export const TaskDialog = ({ taskId, projectId, onClosed } : TaskDialogProps) => {
 
     const project = useProject(projectId);
+    const { data, isError } = useCurrent();
+    const userId = data.payload.id;    
+    
     // const users = useFetch<UserDto[]>('/api/user');
 
     const isNewTask = taskId ? false : true;
@@ -76,33 +80,6 @@ export const TaskDialog = ({ taskId, projectId, onClosed } : TaskDialogProps) =>
     ].map((u)=>(
         <SelectItem value={u.name}>{u.description}</SelectItem>
     ));
-
-    /*
-    const uploadFiles = async () => {
-
-        if(files.length == 0)
-            return ;
-
-        const formData = new FormData();
-        files.forEach((file, index) => {
-            formData.append(`file${index}`, file);
-        });
-
-        const response = await fetch(`http://localhost:5005/api/file`, {
-            method: "POST",
-            mode: 'cors',
-            //credentials: "include",
-            body: formData
-        });
-
-        if (!response.ok) {
-            throw new Error('Ошибка при обновлении задачи');
-        }
-
-        // Если создали новый объект, то вернёт объект с id
-        const res = await response.json();
-        alert(res.id);
-    };*/
 
     const handleSave = async () => {
         try {
@@ -221,12 +198,12 @@ export const TaskDialog = ({ taskId, projectId, onClosed } : TaskDialogProps) =>
                     </Select>
                 </div>
 
-                {!isNewTask && <TaskFiles taskId={task?.id as string} files={files} setFiles={setFiles} oldFiles={task.files}></TaskFiles>}
+                {<TaskFiles taskId={task?.id as string} files={files} setFiles={setFiles} oldFiles={task?.files}></TaskFiles>}
 
                 <Button id="saveButton" onClick={handleSave}>Сохранить</Button>
                 <Button id="back" onClick={() => onClosed()} variant="outline">Отмена</Button>
 
-                {!isNewTask && <TaskComments taskId={task?.id as string} ></TaskComments>}
+                {!isNewTask && <TaskComments taskId={task?.id as string} userId={userId}></TaskComments>}
                 
             </form>
             </CardContent>
