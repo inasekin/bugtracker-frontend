@@ -14,6 +14,9 @@ export type TaskFilesProps = {
     setFiles: any
 };
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+//const API_URL = 'http://localhost:5005';
+
 export const TaskFiles = ({ taskId, files, setFiles, oldFiles} : TaskFilesProps) => {
 
     function handleMultipleChange(event) {
@@ -23,11 +26,12 @@ export const TaskFiles = ({ taskId, files, setFiles, oldFiles} : TaskFilesProps)
     const oldFileList = [];
     if(oldFiles)
         oldFiles.forEach(file => {
-        oldFileList.push((<div key={file.id}>
-            <a href="http://localhost">
+            const url = API_URL + "/api/files/show/" + file.id;
+            oldFileList.push((<div key={file.id}>
+                <a href={url} target="_blank">
                 {file.name}
                 </a>
-        </div>));
+            </div>));
     });
 
     return (
