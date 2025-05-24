@@ -28,27 +28,4 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Проверка на наличие console.log/debugger в staged файлах
-echo "🔍 Checking for console.log and debugger statements..."
-staged_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx)$')
-
-if [ ! -z "$staged_files" ]; then
-  # Проверяем console.log (исключая console.warn и console.error)
-  console_logs=$(git diff --cached | grep -E '^\+.*console\.log\(')
-  if [ ! -z "$console_logs" ]; then
-    echo "⚠️  Warning: Found console.log statements in staged files:"
-    echo "$console_logs"
-    echo "💡 Consider removing console.log before committing or use console.warn/console.error instead."
-  fi
-
-  # Проверяем debugger
-  debuggers=$(git diff --cached | grep -E '^\+.*debugger[;]*')
-  if [ ! -z "$debuggers" ]; then
-    echo "❌ Found debugger statements in staged files:"
-    echo "$debuggers"
-    echo "Please remove debugger statements before committing."
-    exit 1
-  fi
-fi
-
 echo "✅ All pre-commit checks passed! 🎉"

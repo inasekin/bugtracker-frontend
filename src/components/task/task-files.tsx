@@ -28,7 +28,7 @@ export const TaskFiles = ({ oldFiles, setFiles }: TaskFilesProps) => {
 					<a href={url} target="_blank" rel="noopener noreferrer">
 						{file.name}
 					</a>
-				</div>
+				</div>,
 			);
 		});
 	}
@@ -39,7 +39,6 @@ export const TaskFiles = ({ oldFiles, setFiles }: TaskFilesProps) => {
 			<CardContent>
 				<div>{oldFileList}</div>
 
-				<div></div>
 				<div className="m-2">Добавить файлы: </div>
 				<Input id="picture" type="file" multiple onChange={handleMultipleChange} />
 			</CardContent>

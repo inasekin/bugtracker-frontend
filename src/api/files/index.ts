@@ -2,7 +2,7 @@ import { AppFile } from '@/types/common';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-export type File = AppFile;
+export type { AppFile };
 
 export const uploadFilesAsync = async (files: File[]): Promise<AppFile[]> => {
 	if (files.length === 0) {
@@ -10,7 +10,7 @@ export const uploadFilesAsync = async (files: File[]): Promise<AppFile[]> => {
 	}
 
 	const formData = new FormData();
-	files.forEach((file: any, index: number) => {
+	files.forEach((file: File, index: number) => {
 		formData.append(`file${index}`, file);
 	});
 

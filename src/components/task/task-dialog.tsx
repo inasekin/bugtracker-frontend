@@ -49,7 +49,7 @@ export const TaskDialog = ({ taskId, projectId, onClosed }: TaskDialogProps) => 
 	const taskTypeList = [
 		{ name: 'task', description: 'Задача' },
 		{ name: 'bug', description: 'Ошибка' },
-		{ name: 'feature', description: 'Предложение' }
+		{ name: 'feature', description: 'Предложение' },
 	].map((u) => (
 		<SelectItem key={u.name} value={u.name}>
 			{u.description}
@@ -60,7 +60,7 @@ export const TaskDialog = ({ taskId, projectId, onClosed }: TaskDialogProps) => 
 		{ name: 'low', description: 'Низкий' },
 		{ name: 'medium', description: 'Обычный' },
 		{ name: 'high', description: 'Высокий' },
-		{ name: 'critical', description: 'Блокирующий' }
+		{ name: 'critical', description: 'Блокирующий' },
 	].map((u) => (
 		<SelectItem key={u.name} value={u.name}>
 			{u.description}
@@ -71,7 +71,7 @@ export const TaskDialog = ({ taskId, projectId, onClosed }: TaskDialogProps) => 
 		{ name: 'todo', description: 'К выполнению' },
 		{ name: 'in_progress', description: 'В работе' },
 		{ name: 'review', description: 'Ревью' },
-		{ name: 'done', description: 'Выполнено' }
+		{ name: 'done', description: 'Выполнено' },
 	].map((u) => (
 		<SelectItem key={u.name} value={u.name}>
 			{u.description}

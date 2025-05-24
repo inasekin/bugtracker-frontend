@@ -28,8 +28,8 @@ export const columns: ColumnDef<CategoryRecord>[] = [
 		header: '',
 		cell: ({ row }) => {
 			const commands = row.original.commands;
-			const listCommands = commands.map((cmd) => (
-				<Button key={cmd.name} variant={cmd.variant} onClick={cmd.action}>
+			const listCommands = commands.map((cmd, index) => (
+				<Button key={`${cmd.name}-${index}`} variant={cmd.variant} onClick={cmd.action}>
 					{cmd.name}
 				</Button>
 			));

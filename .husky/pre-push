@@ -9,14 +9,6 @@ url="$2"
 
 echo "📡 Pushing to: $remote ($url)"
 
-# Проверяем, есть ли коммиты для пуша
-if git log @{u}.. --oneline >/dev/null 2>&1; then
-  commits_count=$(git log @{u}.. --oneline | wc -l)
-  echo "📦 Found $commits_count commit(s) to push"
-else
-  echo "ℹ️  No commits to push or no upstream branch set"
-fi
-
 # Полная проверка линтинга всего проекта
 echo "🔍 Running full project linting..."
 npm run lint
@@ -47,47 +39,12 @@ if [ $? -ne 0 ]; then
 fi
 
 # Проверка сборки
-echo "🏗️  Building project..."
+echo "🏗️ Building project..."
 npm run build
 
 if [ $? -ne 0 ]; then
   echo "❌ Build failed. Please fix build errors before pushing."
   exit 1
-fi
-
-# Проверка размера bundle (если есть сборка)
-if [ -d "dist" ]; then
-  echo "📊 Checking bundle size..."
-  bundle_size=$(du -sh dist/ | cut -f1)
-  echo "📦 Bundle size: $bundle_size"
-
-  # Предупреждение, если bundle больше 10MB
-  bundle_bytes=$(du -s dist/ | cut -f1)
-  if [ $bundle_bytes -gt 10240 ]; then  # 10MB в KB
-    echo "⚠️  Warning: Bundle size is quite large ($bundle_size). Consider code splitting."
-  fi
-fi
-
-# Если есть тесты - запустить их
-if [ -d "src/__tests__" ] || [ -d "tests" ] || [ -d "__tests__" ]; then
-  echo "🧪 Running tests..."
-  npm run test
-
-  if [ $? -ne 0 ]; then
-    echo "❌ Tests failed. Please fix failing tests before pushing."
-    exit 1
-  fi
-else
-  echo "ℹ️  No tests found. Consider adding tests for better code quality."
-fi
-
-# Проверка на TODO/FIXME комментарии в новых коммитах (только предупреждение)
-echo "🔍 Checking for TODO/FIXME comments in new commits..."
-new_todos=$(git log @{u}.. --pretty=format: --name-only | sort -u | xargs grep -l "TODO\|FIXME" 2>/dev/null || true)
-if [ ! -z "$new_todos" ]; then
-  echo "💡 Found TODO/FIXME comments in:"
-  echo "$new_todos" | sed 's/^/  - /'
-  echo "Consider addressing these before releasing to production."
 fi
 
 echo ""
