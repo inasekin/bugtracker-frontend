@@ -1,30 +1,19 @@
+export type {
+	Project as ProjectDto,
+	IssueCategory as IssueCategoryDto,
+	UserRoleDictionary,
+	AppUser as UserDto,
+} from '@/types/common';
+
 export interface Dictionary<T> {
-    [Key: string]: T;
-};
+	[Key: string]: T;
+}
 
-export interface UserRoleDictionary {
-    [Key: string]: string[];
-};
-
-export type IssueCategoryDto = {
-    categoryName: string;
-    userId? : string;
-};
-
-export type ProjectDto = {
-    id: string,
-    name: string,
-    description: string,
-    userRoles: UserRoleDictionary
-    versions: string[]
-    issueCategories:  IssueCategoryDto[]
-};
-
-export const defaultProjectDto: ProjectDto = {
-        id: "",
-        name: "",
-        description: "",
-        versions: [],
-        issueCategories: [],
-        userRoles: {}
+export const defaultProjectDto = {
+	id: '',
+	name: '',
+	description: '',
+	versions: [],
+	issueCategories: [],
+	userRoles: {},
 };

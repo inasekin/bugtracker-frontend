@@ -1,33 +1,22 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { DottedSeparator } from "@/components/dotted-separator";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { DottedSeparator } from '@/components/dotted-separator';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { useRegister } from '@/api/auth/use-register';
 import { registerSchema, RegisterSchema } from '@/shemas';
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export const RegisterPage = () => {
-    const { mutate, isPending } = useRegister();
+	const { mutate, isPending } = useRegister();
 	const form = useForm<RegisterSchema>({
 		resolver: zodResolver(registerSchema),
 		defaultValues: {
-			name: "",
-			email: "",
-			password: "",
+			name: '',
+			email: '',
+			password: '',
 		},
 	});
 
@@ -52,11 +41,7 @@ export const RegisterPage = () => {
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input
-											{...field}
-											type="text"
-											placeholder="Введите ФИО"
-										/>
+										<Input {...field} type="text" placeholder="Введите ФИО" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -68,11 +53,7 @@ export const RegisterPage = () => {
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input
-											{...field}
-											type="email"
-											placeholder="Введите email"
-										/>
+										<Input {...field} type="email" placeholder="Введите email" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -84,11 +65,7 @@ export const RegisterPage = () => {
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input
-											{...field}
-											type="password"
-											placeholder="Введите пароль"
-										/>
+										<Input {...field} type="password" placeholder="Введите пароль" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -113,4 +90,4 @@ export const RegisterPage = () => {
 			</CardContent>
 		</Card>
 	);
-}
+};

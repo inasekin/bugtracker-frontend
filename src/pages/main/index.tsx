@@ -1,9 +1,9 @@
-import { Dashboard } from "@/components/dashboard/dashboard";
+import { Dashboard } from '@/components/dashboard/dashboard';
 
 export const MainPage = () => {
-    return (
-        <div className="min-h-screen py-6">
-            <Dashboard />
-        </div>
-    );
-}
+	return (
+		<div className="min-h-screen py-6">
+			<Dashboard />
+		</div>
+	);
+};

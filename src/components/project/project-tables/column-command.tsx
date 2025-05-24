@@ -1,8 +1,6 @@
+import { ColumnCommand } from '@/types/common';
 
-export type ColumnCommand = {
-  name: string,
-  variant: string,
-  action: React.MouseEvent<HTMLButtonElement, MouseEvent>
-};
+// Переэкспортируем из общих типов
+export type { ColumnCommand };
 
-export type ItemAction = (record: string) => any;
+export type ItemAction = (record: any) => any;
