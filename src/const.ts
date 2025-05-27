@@ -7,6 +7,7 @@ export const AppRoute = {
 	Projects: '/projects' as const,
 	Users: '/users' as const,
 	Settings: '/settings' as const,
+    VideoCalls: '/videocalls' as const,
 } as const;
 
 export const AuthorizationStatus = {

@@ -8,10 +8,14 @@ import { Layout } from '@/components/main/layout';
 import { LoginPage } from '@/pages/login';
 import { RegisterPage } from '@/pages/register';
 import { AuthLayout } from '@/components/main/layout/auth-layout';
-import { TasksPage } from '@/pages/tasks';
-import { ProjectsPage } from '@/pages/projects';
-import { UsersPage } from '@/pages/users';
-import { SettingsPage } from '@/pages/settings';
+import {TasksPage} from "@/pages/tasks";
+import {ProjectsPage} from "@/pages/projects";
+import {UsersPage} from "@/pages/users";
+import {SettingsPage} from "@/pages/settings";
+import {VideoCallsPage} from "@/pages/videocalls";
+import {VideoCallRoomPage} from "@/pages/videocalls/[id]";
+import {JoinRoomPage} from "@/pages/videocalls/join";
+import {JoinPage} from "@/pages/videocalls/JoinPage";
 
 export const App = () => {
 	return (
@@ -37,6 +41,11 @@ export const App = () => {
 						</PrivateRoute>
 					}
 				/>
+				
+				{/* Публичные маршруты, доступные без авторизации */}
+				<Route path={`${AppRoute.VideoCalls}/join`} element={<JoinPage />} />
+				<Route path={`${AppRoute.VideoCalls}/:id`} element={<VideoCallRoomPage />} />
+				
 				<Route
 					element={
 						<PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Login}>
@@ -53,6 +62,7 @@ export const App = () => {
 						<Route path=":id" element={<UsersPage />} />
 					</Route>
 					<Route path={AppRoute.Settings} element={<SettingsPage />} />
+					<Route path={AppRoute.VideoCalls} element={<VideoCallsPage />} />
 				</Route>
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>

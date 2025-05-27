@@ -1,16 +1,10 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import {
-	GoCheckCircle,
-	GoCheckCircleFill,
-	GoHome,
-	GoHomeFill,
-	GoProject,
-	GoGear,
-	GoPerson,
-} from 'react-icons/go';
-import { cn } from '@/lib/utils.ts';
-import { IconType } from 'react-icons';
+
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill, GoProject, GoGear, GoPerson } from "react-icons/go";
+import { IoVideocam } from "react-icons/io5";
+import { cn } from "@/lib/utils.ts";
+import { IconType } from "react-icons";
 
 interface RouteItem {
 	label: string;
@@ -20,36 +14,43 @@ interface RouteItem {
 }
 
 const routes: RouteItem[] = [
-	{
-		label: 'Главная',
-		href: '/',
-		icon: GoHome,
-		activeIcon: GoHomeFill,
-	},
-	{
-		label: 'Мои задачи',
-		href: '/tasks',
-		icon: GoCheckCircle,
-		activeIcon: GoCheckCircleFill,
-	},
-	{
-		label: 'Проекты',
-		href: '/projects',
-		icon: GoProject,
-		activeIcon: GoProject,
-	},
-	{
-		label: 'Пользователи',
-		href: '/users',
-		icon: GoPerson,
-		activeIcon: GoPerson,
-	},
-	{
-		label: 'Настройки',
-		href: '/settings',
-		icon: GoGear,
-		activeIcon: GoGear,
-	},
+
+    {
+        label: "Главная",
+        href: "/",
+        icon: GoHome,
+        activeIcon: GoHomeFill,
+    },
+    {
+        label: "Мои задачи",
+        href: "/tasks",
+        icon: GoCheckCircle,
+        activeIcon: GoCheckCircleFill,
+    },
+    {
+        label: "Проекты",
+        href: "/projects",
+        icon: GoProject,
+        activeIcon: GoProject,
+    },
+    {
+        label: "Пользователи",
+        href: "/users",
+        icon: GoPerson,
+        activeIcon: GoPerson,
+    },
+    {
+        label: "Видеозвонки",
+        href: "/videocalls",
+        icon: IoVideocam,
+        activeIcon: IoVideocam,
+    },
+    {
+        label: "Настройки",
+        href: "/settings",
+        icon: GoGear,
+        activeIcon: GoGear,
+    },
 ];
 
 export const Navigation: React.FC = () => {

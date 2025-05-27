@@ -1,9 +1,10 @@
-FROM node:20-alpine AS base
+FROM node:21-alpine
+
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
-RUN npm ci --legacy-peer-deps
+RUN npm install
 
 COPY . .
 

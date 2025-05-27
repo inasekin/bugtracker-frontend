@@ -9,18 +9,22 @@ interface PageInfo {
 }
 
 const pathnameMap: Record<string, PageInfo> = {
-	tasks: {
-		title: 'Мои задачи',
-		description: 'Управляйте своими задачами здесь',
-	},
-	projects: {
-		title: 'Мои проекты',
-		description: 'Управляйте своими проектами здесь',
-	},
-	settings: {
-		title: 'Настройки',
-		description: 'Ваши настройки',
-	},
+    tasks: {
+        title: "Мои задачи",
+        description: "Управляйте своими задачами здесь",
+    },
+    projects: {
+        title: "Мои проекты",
+        description: "Управляйте своими проектами здесь",
+    },
+    settings: {
+        title: "Настройки",
+        description: "Ваши настройки",
+    },
+    videocalls: {
+        title: "Видеоконференции",
+        description: "Управление видеоконфренциями",
+    }
 };
 
 const defaultMap: PageInfo = {
