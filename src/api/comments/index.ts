@@ -120,7 +120,8 @@ export function useComment(commentId?: string) {
 				return { success: true, data };
 			}
 		} catch (err) {
-			const errorMessage = err instanceof Error ? err.message : 'Ошибка при обновлении комментария';
+			const errorMessage =
+				err instanceof Error ? err.message : 'Ошибка при обновлении комментария';
 			setError(errorMessage);
 			return { success: false, error: errorMessage };
 		} finally {
@@ -147,7 +148,8 @@ export function useComment(commentId?: string) {
 
 			return { success: true };
 		} catch (err) {
-			const errorMessage = err instanceof Error ? err.message : 'Ошибка при удалении комментария';
+			const errorMessage =
+				err instanceof Error ? err.message : 'Ошибка при удалении комментария';
 			setError(errorMessage);
 			return { success: false, error: errorMessage };
 		} finally {

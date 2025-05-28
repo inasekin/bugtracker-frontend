@@ -61,11 +61,14 @@ export function useTask(taskId?: string) {
 			try {
 				setLoading(true);
 				const refreshId = Date.now();
-				const response = await fetch(`${API_URL}/api/issues/${taskId}?refreshId=${refreshId}`, {
-					method: 'GET',
-					credentials: 'include',
-					mode: 'cors',
-				});
+				const response = await fetch(
+					`${API_URL}/api/issues/${taskId}?refreshId=${refreshId}`,
+					{
+						method: 'GET',
+						credentials: 'include',
+						mode: 'cors',
+					},
+				);
 
 				if (!response.ok) {
 					throw new Error('Ошибка при получении задачи');
@@ -112,7 +115,8 @@ export function useTask(taskId?: string) {
 				return { success: true, data };
 			}
 		} catch (err) {
-			const errorMessage = err instanceof Error ? err.message : 'Ошибка при обновлении задачи';
+			const errorMessage =
+				err instanceof Error ? err.message : 'Ошибка при обновлении задачи';
 			setError(errorMessage);
 			return { success: false, error: errorMessage };
 		} finally {

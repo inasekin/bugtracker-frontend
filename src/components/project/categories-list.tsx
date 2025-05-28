@@ -114,15 +114,19 @@ export function CategoriesList() {
 					<CardDescription className="my-2">
 						Каждый проект разбивается на категории(модули/микросервисы).
 						<br />
-						Каждой категории назначается один ответственный на которого отправляются задачи
-						относящиеся к категории.
+						Каждой категории назначается один ответственный на которого отправляются
+						задачи относящиеся к категории.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<div className="container mx-auto ">
 						<DataTable
 							columns={columns}
-							data={categoriesFromProject(project.issueCategories, editCategory, deleteCategory)}
+							data={categoriesFromProject(
+								project.issueCategories,
+								editCategory,
+								deleteCategory,
+							)}
 						/>
 					</div>
 				</CardContent>

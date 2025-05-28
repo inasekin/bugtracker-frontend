@@ -93,7 +93,9 @@ export function useNotifications() {
 			// Моковые данные - потом заменим на реальный API
 			setNotifications((prev) =>
 				prev.map((notification) =>
-					notification.id === notificationId ? { ...notification, read: true } : notification,
+					notification.id === notificationId
+						? { ...notification, read: true }
+						: notification,
 				),
 			);
 
@@ -127,7 +129,9 @@ export function useNotifications() {
 	const markAllAsRead = async () => {
 		try {
 			// Моковые данные - потом заменим на реальный API
-			setNotifications((prev) => prev.map((notification) => ({ ...notification, read: true })));
+			setNotifications((prev) =>
+				prev.map((notification) => ({ ...notification, read: true })),
+			);
 
 			/*
       // Код для реального API

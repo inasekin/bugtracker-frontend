@@ -95,7 +95,10 @@ export function UsersList() {
 	if (userRoleDlgShowed) {
 		return (
 			<div>
-				<ProjectAddUserDialog userRole={userRole} setUserRole={setUserRole}></ProjectAddUserDialog>
+				<ProjectAddUserDialog
+					userRole={userRole}
+					setUserRole={setUserRole}
+				></ProjectAddUserDialog>
 				<br />
 				<Button onClick={() => addUser()}>Добавить</Button>
 				<Button onClick={() => setUserRoleDlgShowed(false)}>Отмена</Button>
@@ -108,7 +111,8 @@ export function UsersList() {
 					<CardTitle>Участники проекта</CardTitle>
 					<CardDescription className="my-2">
 						Для проекта необходимо указать участников и задать роли. <br />
-						Исходя из указанных ролей будут назначены заранее определенные права доступа.
+						Исходя из указанных ролей будут назначены заранее определенные права
+						доступа.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>

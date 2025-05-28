@@ -30,7 +30,10 @@ export function Dashboard() {
 				<div>
 					<div className="flex items-center justify-between mb-4">
 						<h2 className="text-xl font-semibold">Мои задачи</h2>
-						<Link to="/tasks" className="text-sm text-blue-600 hover:text-blue-800 hover:underline">
+						<Link
+							to="/tasks"
+							className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+						>
 							Все задачи
 						</Link>
 					</div>
@@ -81,7 +84,9 @@ export function Dashboard() {
 						) : projects && projects.length > 0 ? (
 							projects
 								.slice(0, 3)
-								.map((project) => <ProjectCard key={project.id} project={project} />)
+								.map((project) => (
+									<ProjectCard key={project.id} project={project} />
+								))
 						) : (
 							<div className="text-center py-4 border rounded-md">
 								<p className="text-slate-500">Нет доступных проектов</p>

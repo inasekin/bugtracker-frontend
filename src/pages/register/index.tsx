@@ -53,7 +53,11 @@ export const RegisterPage = () => {
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input {...field} type="email" placeholder="Введите email" />
+										<Input
+											{...field}
+											type="email"
+											placeholder="Введите email"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -65,7 +69,11 @@ export const RegisterPage = () => {
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input {...field} type="password" placeholder="Введите пароль" />
+										<Input
+											{...field}
+											type="password"
+											placeholder="Введите пароль"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>

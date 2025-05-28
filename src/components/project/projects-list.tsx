@@ -43,8 +43,8 @@ export function ProjectsList() {
 				<CardTitle>Проекты</CardTitle>
 				<CardDescription className="my-2">
 					Проект - базовая сущность. <br />
-					Задачи группируются по проектам. Проект имеет версии. Настраиваются права доступа и
-					категории.
+					Задачи группируются по проектам. Проект имеет версии. Настраиваются права
+					доступа и категории.
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

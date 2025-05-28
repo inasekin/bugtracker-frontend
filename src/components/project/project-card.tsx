@@ -32,7 +32,10 @@ export function ProjectCard() {
 				</div>
 				<div className="flex flex-col space-y-2">
 					<Label htmlFor="description">Описание проекта</Label>
-					<Textarea value={project.description} onChange={(e) => setDescription(e.target.value)} />
+					<Textarea
+						value={project.description}
+						onChange={(e) => setDescription(e.target.value)}
+					/>
 				</div>
 				<div className="flex flex-col space-y-8">
 					<Label htmlFor="itemId">Id: {project.id}</Label>

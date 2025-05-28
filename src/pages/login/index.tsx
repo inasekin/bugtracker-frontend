@@ -41,7 +41,11 @@ export const LoginPage: React.FC = () => {
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input {...field} type="email" placeholder="Введите адрес электронной почты" />
+										<Input
+											{...field}
+											type="email"
+											placeholder="Введите адрес электронной почты"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -53,7 +57,11 @@ export const LoginPage: React.FC = () => {
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Input {...field} type="password" placeholder="Введите пароль" />
+										<Input
+											{...field}
+											type="password"
+											placeholder="Введите пароль"
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>

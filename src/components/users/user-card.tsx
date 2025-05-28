@@ -63,10 +63,17 @@ export function UserCard({ user }: UserCardProps) {
 				</div>
 
 				<div className="mt-3 flex items-center justify-between">
-					<span className={cn('text-xs px-2 py-1 rounded-full', getRoleBadgeStyles(user.role))}>
+					<span
+						className={cn(
+							'text-xs px-2 py-1 rounded-full',
+							getRoleBadgeStyles(user.role),
+						)}
+					>
 						{getRoleLabel(user.role)}
 					</span>
-					<span className="text-xs text-slate-500">С {formatDate(new Date(user.createdAt))}</span>
+					<span className="text-xs text-slate-500">
+						С {formatDate(new Date(user.createdAt))}
+					</span>
 				</div>
 			</div>
 		</Link>

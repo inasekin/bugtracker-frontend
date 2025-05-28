@@ -29,7 +29,10 @@ export const TaskComments = ({ taskId, userId }: TaskCommentsProps) => {
 								{new Date(comment.updatedAtTime).toLocaleTimeString()}&nbsp;
 							</b>
 						</div>
-						<Button variant={'destructive'} onClick={() => deleteCommentButton(comment.id)}>
+						<Button
+							variant={'destructive'}
+							onClick={() => deleteCommentButton(comment.id)}
+						>
 							Удалить комментарий
 						</Button>
 					</div>
@@ -63,7 +66,10 @@ export const TaskComments = ({ taskId, userId }: TaskCommentsProps) => {
 
 				<div className="flex flex-col space-y-4 m-2">
 					<Label htmlFor="description">Новый комментарий</Label>
-					<Textarea value={comment.content} onChange={(e) => setCommentContent(e.target.value)} />
+					<Textarea
+						value={comment.content}
+						onChange={(e) => setCommentContent(e.target.value)}
+					/>
 				</div>
 				<Button className="m-2" onClick={() => addComment()}>
 					Добавить комментарий...

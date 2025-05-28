@@ -54,7 +54,9 @@ export const UsersPage = () => {
 						<div className="w-full md:w-48">
 							<Select
 								value={roleFilter || 'all'}
-								onValueChange={(value) => setRoleFilter(value === 'all' ? null : value)}
+								onValueChange={(value) =>
+									setRoleFilter(value === 'all' ? null : value)
+								}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder="Все роли" />
@@ -95,7 +97,9 @@ export const UsersPage = () => {
 				</CardContent>
 
 				<CardFooter className="flex justify-between">
-					<div className="text-sm text-slate-500">Всего пользователей: {users.length}</div>
+					<div className="text-sm text-slate-500">
+						Всего пользователей: {users.length}
+					</div>
 					<Button onClick={() => history.back()} variant="outline">
 						Назад
 					</Button>

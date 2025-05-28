@@ -118,7 +118,11 @@ export const TaskDialog = ({ taskId, projectId, onClosed }: TaskDialogProps) => 
 				<CardContent className="py-10">
 					<div className="text-center text-red-500">
 						<p>Ошибка: {error}</p>
-						<Button onClick={() => navigate('/tasks')} className="mt-4" variant="outline">
+						<Button
+							onClick={() => navigate('/tasks')}
+							className="mt-4"
+							variant="outline"
+						>
 							Вернуться к списку задач
 						</Button>
 					</div>
@@ -149,14 +153,18 @@ export const TaskDialog = ({ taskId, projectId, onClosed }: TaskDialogProps) => 
 								id="name"
 								placeholder="Укажите тему задачи"
 								value={task?.title || ''}
-								onChange={(e) => setTask({ ...task, title: e.target.value } as Task)}
+								onChange={(e) =>
+									setTask({ ...task, title: e.target.value } as Task)
+								}
 							/>
 						</div>
 						<div className="flex flex-col space-y-2">
 							<Label htmlFor="description">Описание</Label>
 							<Textarea
 								value={task?.description || ''}
-								onChange={(e) => setTask({ ...task, description: e.target.value } as Task)}
+								onChange={(e) =>
+									setTask({ ...task, description: e.target.value } as Task)
+								}
 							/>
 						</div>
 						<div className="flex flex-col space-y-4">
@@ -182,7 +190,9 @@ export const TaskDialog = ({ taskId, projectId, onClosed }: TaskDialogProps) => 
 					<div className="flex flex-col space-y-2">
 						<Label htmlFor="parentProject">Приоритет</Label>
 						<Select
-							onValueChange={(p) => setTask({ ...task, priority: p as TaskPriority } as Task)}
+							onValueChange={(p) =>
+								setTask({ ...task, priority: p as TaskPriority } as Task)
+							}
 							defaultValue={task ? task.priority : 'medium'}
 						>
 							<SelectTrigger id="framework2">
@@ -197,7 +207,9 @@ export const TaskDialog = ({ taskId, projectId, onClosed }: TaskDialogProps) => 
 					<div className="flex flex-col space-y-2">
 						<Label htmlFor="parentProject">Статус</Label>
 						<Select
-							onValueChange={(s) => setTask({ ...task, status: s as TaskStatus } as Task)}
+							onValueChange={(s) =>
+								setTask({ ...task, status: s as TaskStatus } as Task)
+							}
 							defaultValue={task ? task.status : 'todo'}
 						>
 							<SelectTrigger id="framework3">

@@ -97,21 +97,27 @@ export function ProjectAddUserDialog({ userRole, setUserRole }: ProjectAddUserDi
 						<div className="flex flex-row space-y-2 gap-4">
 							<Checkbox
 								checked={isChecked(roleManager)}
-								onCheckedChange={() => setChecked(roleManager, !isChecked(roleManager))}
+								onCheckedChange={() =>
+									setChecked(roleManager, !isChecked(roleManager))
+								}
 							/>{' '}
 							<label htmlFor="terms1">{roleManager}</label>
 						</div>
 						<div className="flex flex-row space-y-2 gap-4">
 							<Checkbox
 								checked={isChecked(roleDeveloper)}
-								onCheckedChange={() => setChecked(roleDeveloper, !isChecked(roleDeveloper))}
+								onCheckedChange={() =>
+									setChecked(roleDeveloper, !isChecked(roleDeveloper))
+								}
 							/>{' '}
 							<label htmlFor="terms1">{roleDeveloper}</label>
 						</div>
 						<div className="flex flex-row space-y-2 gap-4">
 							<Checkbox
 								checked={isChecked(roleTester)}
-								onCheckedChange={() => setChecked(roleTester, !isChecked(roleTester))}
+								onCheckedChange={() =>
+									setChecked(roleTester, !isChecked(roleTester))
+								}
 							/>{' '}
 							<label htmlFor="terms1">{roleTester}</label>
 						</div>

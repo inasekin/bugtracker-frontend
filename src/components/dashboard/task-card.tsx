@@ -52,7 +52,11 @@ export function TaskCard({ id, title, priority, type, assignee }: TaskCardProps)
 					{assignee && (
 						<div className="flex items-center space-x-1">
 							{assignee.avatar ? (
-								<img src={assignee.avatar} alt={assignee.name} className="h-5 w-5 rounded-full" />
+								<img
+									src={assignee.avatar}
+									alt={assignee.name}
+									className="h-5 w-5 rounded-full"
+								/>
 							) : (
 								<div className="h-5 w-5 rounded-full bg-slate-200 flex items-center justify-center text-xs text-slate-500">
 									{assignee.name.charAt(0)}

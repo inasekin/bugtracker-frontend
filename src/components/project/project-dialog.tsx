@@ -68,7 +68,11 @@ export const ProjectDialog = ({ projectId, isNewProject }: ProjectDialogProps) =
 				<CardContent className="py-10">
 					<div className="text-center text-red-500">
 						<p>Ошибка: {error}</p>
-						<Button onClick={() => navigate('/projects')} className="mt-4" variant="outline">
+						<Button
+							onClick={() => navigate('/projects')}
+							className="mt-4"
+							variant="outline"
+						>
 							Вернуться к списку проектов
 						</Button>
 					</div>
@@ -82,12 +86,14 @@ export const ProjectDialog = ({ projectId, isNewProject }: ProjectDialogProps) =
 			<Card>
 				<CardHeader>
 					<CardTitle>
-						{isNewProject ? 'Создание нового проекта' : `Редактирование проекта: ${project.name}`}
+						{isNewProject
+							? 'Создание нового проекта'
+							: `Редактирование проекта: ${project.name}`}
 					</CardTitle>
 					<CardDescription>
-						Проект - основа для управления задачами. Содержит задачи. На проект назначаются
-						пользователи с определенными ролями. Для проекта можно задать список версий и список
-						доступных категорий (модулей/подпроектов)
+						Проект - основа для управления задачами. Содержит задачи. На проект
+						назначаются пользователи с определенными ролями. Для проекта можно задать
+						список версий и список доступных категорий (модулей/подпроектов)
 					</CardDescription>
 				</CardHeader>
 				<CardContent>

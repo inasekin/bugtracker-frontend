@@ -177,7 +177,8 @@ export const TasksPage = () => {
 							<div className="bg-white rounded-lg shadow p-4 mb-6">
 								<div className="flex justify-between items-center">
 									<h2 className="font-semibold text-xl">
-										{projects?.find((p) => p.id === selectedProjectId)?.name || 'Проект'}
+										{projects?.find((p) => p.id === selectedProjectId)?.name ||
+											'Проект'}
 									</h2>
 									<DropdownMenu>
 										<DropdownMenuTrigger asChild>
@@ -186,7 +187,9 @@ export const TasksPage = () => {
 											</Button>
 										</DropdownMenuTrigger>
 										<DropdownMenuContent align="end">
-											<DropdownMenuItem onClick={handleAddTask}>Создать задачу</DropdownMenuItem>
+											<DropdownMenuItem onClick={handleAddTask}>
+												Создать задачу
+											</DropdownMenuItem>
 											<DropdownMenuItem>Настройки проекта</DropdownMenuItem>
 										</DropdownMenuContent>
 									</DropdownMenu>
@@ -223,12 +226,16 @@ export const TasksPage = () => {
 														>
 															<CardContent className="p-3">
 																<div className="flex items-center justify-between mb-2">
-																	<span className="text-xs text-slate-500">#{task.id}</span>
+																	<span className="text-xs text-slate-500">
+																		#{task.id}
+																	</span>
 																	<div className="flex items-center space-x-1">
 																		<span
 																			className={cn(
 																				'h-2 w-2 rounded-full',
-																				getPriorityColor(task.priority),
+																				getPriorityColor(
+																					task.priority,
+																				),
 																			)}
 																		/>
 																		<span className="text-xs text-slate-500 capitalize">
@@ -251,15 +258,26 @@ export const TasksPage = () => {
 
 																	{task.assignee && (
 																		<div className="flex items-center space-x-1">
-																			{task.assignee.avatar ? (
+																			{task.assignee
+																				.avatar ? (
 																				<img
-																					src={task.assignee.avatar}
-																					alt={task.assignee.name}
+																					src={
+																						task
+																							.assignee
+																							.avatar
+																					}
+																					alt={
+																						task
+																							.assignee
+																							.name
+																					}
 																					className="h-5 w-5 rounded-full"
 																				/>
 																			) : (
 																				<div className="h-5 w-5 rounded-full bg-slate-200 flex items-center justify-center text-xs text-slate-500">
-																					{task.assignee.name.charAt(0)}
+																					{task.assignee.name.charAt(
+																						0,
+																					)}
 																				</div>
 																			)}
 																		</div>

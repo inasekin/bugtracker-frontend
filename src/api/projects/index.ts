@@ -84,11 +84,14 @@ export function useProject(projectId?: string) {
 			try {
 				setLoading(true);
 				const refreshId = Date.now();
-				const response = await fetch(`${API_URL}/api/project/${projectId}?refreshId=${refreshId}`, {
-					method: 'GET',
-					credentials: 'include',
-					mode: 'cors',
-				});
+				const response = await fetch(
+					`${API_URL}/api/project/${projectId}?refreshId=${refreshId}`,
+					{
+						method: 'GET',
+						credentials: 'include',
+						mode: 'cors',
+					},
+				);
 
 				if (!response.ok) {
 					throw new Error('Ошибка при получении проекта');
@@ -137,7 +140,8 @@ export function useProject(projectId?: string) {
 				return { success: true, data };
 			}
 		} catch (err) {
-			const errorMessage = err instanceof Error ? err.message : 'Ошибка при обновлении проекта';
+			const errorMessage =
+				err instanceof Error ? err.message : 'Ошибка при обновлении проекта';
 			setError(errorMessage);
 			return { success: false, error: errorMessage };
 		} finally {

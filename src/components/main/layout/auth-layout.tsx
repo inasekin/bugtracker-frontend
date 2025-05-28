@@ -24,7 +24,9 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
 					</Button>
 				</nav>
 			</div>
-			<div className="flex flex-col items-center justify-center pt-4 md:py-14">{children}</div>
+			<div className="flex flex-col items-center justify-center pt-4 md:py-14">
+				{children}
+			</div>
 		</main>
 	);
 };

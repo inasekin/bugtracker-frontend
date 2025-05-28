@@ -31,7 +31,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
 						<span>{project.versions?.length || 0}</span>{' '}
 						{(project.versions?.length || 0) === 1
 							? 'версия'
-							: (project.versions?.length || 0) > 1 && (project.versions?.length || 0) < 5
+							: (project.versions?.length || 0) > 1 &&
+								  (project.versions?.length || 0) < 5
 								? 'версии'
 								: 'версий'}
 					</div>

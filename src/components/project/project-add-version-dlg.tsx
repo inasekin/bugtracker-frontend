@@ -26,7 +26,10 @@ export function ProjectAddVersionDialog({ version, setVersion }: ProjectAddVersi
 					<div className="grid w-full items-center gap-4">
 						<div className="flex flex-col space-y-2">
 							<Label htmlFor="parentProject">Версия</Label>
-							<Input value={version} onChange={(e) => setVersion(e.target.value)}></Input>
+							<Input
+								value={version}
+								onChange={(e) => setVersion(e.target.value)}
+							></Input>
 						</div>
 					</div>
 				</form>

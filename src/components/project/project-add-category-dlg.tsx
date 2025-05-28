@@ -46,7 +46,9 @@ export function ProjectAddCategoryDialog({ category, setCategory }: ProjectAddCa
 							<Label htmlFor="parentProject">Категория</Label>
 							<Input
 								value={category.categoryName}
-								onChange={(e) => setCategory({ ...category, categoryName: e.target.value })}
+								onChange={(e) =>
+									setCategory({ ...category, categoryName: e.target.value })
+								}
 							></Input>
 						</div>
 						<div className="flex flex-col space-y-2">
